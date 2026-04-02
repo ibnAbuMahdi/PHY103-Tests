@@ -22,8 +22,8 @@
       --bg: #1c1c1a; --bg2: #252523; --bg3: #2e2e2b;
       --text: #e8e8e2; --text2: #9a9a94; --text3: #6b6b65;
       --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
-      --blue-bg: #0c2a45; --blue-text: #85b7eb; --blue-border: rgba(55,138,221,0.3);
-      --green-bg: #17340a; --green-text: #97c459; --green-border: rgba(99,153,34,0.3);
+      --blue-bg: #0c2a; --blue-text: #85b7eb; --blue-border: rgba(55,138,221,0.3);
+      --green-bg: #17340a; --green-text: #97c9; --green-border: rgba(99,153,34,0.3);
       --warn-bg: #3a2405; --warn-text: #fac775; --warn-border: rgba(239,159,39,0.3);
       --danger-bg: #2e0f0f; --danger-text: #f09595; --danger-border: rgba(226,75,74,0.3);
     }
@@ -136,7 +136,7 @@
   <div class="site-header">
     <div class="institution">Federal University Birnin Kebbi</div>
     <h1>Group 2 — Properties &amp; Behaviour of Matter</h1>
-    <div class="subtitle">Elasticity · Hydrostatics · Surface Tension &nbsp;|&nbsp; 10 Questions · 45 minutes</div>
+    <div class="subtitle">Elasticity · Hydrostatics · Surface Tension &nbsp;|&nbsp; 10 Questions · 30 minutes</div>
   </div>
 
   <!-- ═══ ENTRY SCREEN ═══ -->
@@ -176,7 +176,7 @@
         <div class="name" id="tp-name"></div>
         <div class="meta" id="tp-meta"></div>
       </div>
-      <div class="timer" id="timer">45:00</div>
+      <div class="timer" id="timer">30:00</div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
     <div class="legend">
@@ -266,7 +266,7 @@ var questions = [
 
 var answers = new Array(10).fill("");
 var current = 0;
-var totalSeconds = 45 * 60;
+var totalSeconds = 30 * 60;
 var timerInterval = null;
 var participant = {};
 var sheetsEnabled = false;
@@ -302,7 +302,7 @@ function startTest() {
   document.getElementById("tp-meta").textContent = admno + " · " + dept;
   answers = new Array(10).fill("");
   current = 0;
-  totalSeconds = 45 * 60;
+  totalSeconds = 30 * 60;
   if (timerInterval) clearInterval(timerInterval);
   showScreen("screen-test");
   renderQuestion();
