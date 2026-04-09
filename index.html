@@ -422,15 +422,17 @@ function doSubmit() {
       + (hasAns ? esc(answers[i]) : "No answer provided") + "</div>";
     reviewEl.appendChild(div);
   });
-
-  var payload = {
-    name: participant.name,
-    admno: participant.admno,
-    dept: participant.dept,
-    answered: answered,
-    answers: answers.slice(),
-    submittedAt: new Date().toISOString()
-  };
+// group2_physics_test_sheets.html
+var payload = {
+  name: participant.name,
+  admno: participant.admno,
+  dept: participant.dept,
+  group: "Group 3",      // ← add this
+  answered: answered,
+  answers: answers.slice(),
+  submittedAt: new Date().toISOString()
+};
+  
 
   try {
     var existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
