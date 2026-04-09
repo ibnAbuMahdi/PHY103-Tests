@@ -135,15 +135,12 @@
   <div class="site-header">
     <div class="institution">Bayero University Kano</div>
     <h1>Group 3 — Laws and Processes of Thermodynamics</h1>
-    <div class="subtitle">First Law · Second Law · Thermodynamic Processes · Bernoulli's Equation &nbsp;|&nbsp; 10 Questions · 45 minutes</div>
+    <div class="subtitle">First Law · Second Law · Thermodynamic Processes · Bernoulli's Equation &nbsp;|&nbsp; 10 Questions · 30 minutes</div>
   </div>
 
   <!-- ═══ ENTRY SCREEN ═══ -->
   <div id="screen-entry">
-    <div id="config-banner" class="setup-banner hidden">
-      ⚠️ Google Sheets not configured. Results will save locally only.
-      Open this file and set <strong>APPS_SCRIPT_URL</strong> at the top of the &lt;script&gt; section.
-    </div>
+   
     <div class="card">
       <div class="section-title">Participant details</div>
       <label for="f-name">Full name</label>
@@ -185,7 +182,7 @@
         <div class="name" id="tp-name"></div>
         <div class="meta" id="tp-meta"></div>
       </div>
-      <div class="timer" id="timer">45:00</div>
+      <div class="timer" id="timer">30:00</div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
     <div class="legend">
@@ -255,7 +252,7 @@
 // ════════════════════════════════════════════════
 //  CONFIGURATION — paste your Apps Script URL here
 // ════════════════════════════════════════════════
-var APPS_SCRIPT_URL = "YOUR_APPS_SCRIPT_URL_HERE";
+var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwnPN4Pic-tsJbKFcn9x0feoPahEAGDwP0yaOaWbaDmDErUdjAeWFq4KB3tB6nZjmS0Qw/exec";
 // ════════════════════════════════════════════════
 
 var STORAGE_KEY = "buk_group3_test_results";
@@ -315,7 +312,7 @@ var questions = [
 
 var answers = new Array(10).fill("");
 var current = 0;
-var totalSeconds = 45 * 60;
+var totalSeconds = 30 * 60;
 var timerInterval = null;
 var participant = {};
 var sheetsEnabled = false;
@@ -351,7 +348,7 @@ function startTest() {
   document.getElementById("tp-meta").textContent = admno + " · " + dept;
   answers = new Array(10).fill("");
   current = 0;
-  totalSeconds = 45 * 60;
+  totalSeconds = 30 * 60;
   if (timerInterval) clearInterval(timerInterval);
   showScreen("screen-test");
   renderQuestion();
