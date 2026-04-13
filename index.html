@@ -253,57 +253,57 @@ var STORAGE_KEY = "buk_group3m_test_results";
 
 var questions = [
   {
-    text: "State the First Law of Thermodynamics and write its mathematical form.",
-    type: "Definition",
-    hint: "Express it in terms of heat (Q), work (W), and internal energy (ΔU). Define each term."
-  },
-  {
-    text: "A system absorbs 500 J of heat and does 200 J of work on its surroundings. What is the change in internal energy?",
-    type: "Calculation",
-    hint: "Apply ΔU = Q − W. Be careful about sign conventions."
-  },
-  {
-    text: "Describe an isothermal process and state the condition required for it to occur.",
+    text: "Describe an isobaric process and derive the expression for work done by an ideal gas during this process.",
     type: "Short answer",
-    hint: "State what remains constant and the condition for the system."
+    hint: "State what remains constant. Work done = PΔV = nRΔT."
   },
   {
-    text: "Describe an adiabatic process and write the condition for an ideal gas undergoing it.",
+    text: "What is an isochoric (isovolumetric) process? What is the work done and what does the First Law reduce to in this case?",
     type: "Short answer",
-    hint: "State what is zero in an adiabatic process and give the relation between P and V (PVγ = constant)."
+    hint: "Work done = 0 since ΔV = 0. Therefore ΔU = Q."
   },
   {
-    text: "State the Second Law of Thermodynamics in two different forms.",
-    type: "Definition",
-    hint: "Give both the Kelvin–Planck statement and the Clausius statement."
-  },
-  {
-    text: "Define entropy and explain what ΔS > 0 means for a spontaneous process.",
-    type: "Definition",
-    hint: "Give the SI unit and relate entropy to the disorder of a system."
-  },
-  {
-    text: "A Carnot engine operates between a hot reservoir at 500 K and a cold reservoir at 300 K. Calculate its efficiency.",
+    text: "An ideal gas expands isothermally at 400 K, absorbing 600 J of heat. Find (a) the work done by the gas and (b) the change in internal energy.",
     type: "Calculation",
-    hint: "Use η = 1 − (T_cold / T_hot). Express the answer as a percentage."
+    hint: "For isothermal process, ΔT = 0 so ΔU = 0. Therefore W = Q."
   },
   {
-    text: "A heat engine absorbs 1000 J from a hot reservoir and does 350 J of work. Find (a) its efficiency and (b) the heat rejected to the cold reservoir.",
+    text: "An adiabatic process compresses an ideal gas, doing 300 J of work on it. What is the change in internal energy of the gas?",
     type: "Calculation",
-    hint: "Efficiency = W/Q_H. Heat rejected = Q_H − W."
+    hint: "For adiabatic process Q = 0, so ΔU = −W. Be careful about sign: work done ON the gas is positive."
   },
   {
-    text: "State Bernoulli's Equation and define each term.",
-    type: "Definition",
-    hint: "Write the full equation: P + ½ρv² + ρgh = constant. Define P, ρ, v, g, and h."
-  },
-  {
-    text: "State the equation of continuity for fluid flow and explain its physical meaning.",
+    text: "Explain how a refrigerator works using the Second Law of Thermodynamics. Why is external work required?",
     type: "Short answer",
-    hint: "Write A₁v₁ = A₂v₂ and explain what it implies about conservation of mass in fluid flow."
+    hint: "Use the Clausius statement. Heat cannot spontaneously flow from cold to hot — hence external work is needed."
+  },
+  {
+    text: "Define the thermal efficiency of a heat engine and explain why it can never reach 100%.",
+    type: "Definition",
+    hint: "η = W/Q_H. Relate to the Second Law and the need for heat rejection to a cold reservoir."
+  },
+  {
+    text: "What is the Zeroth Law of Thermodynamics and what role does it play in relation to the First and Second Laws?",
+    type: "Short answer",
+    hint: "State the Zeroth Law and explain how it establishes the concept of temperature, which underpins both other laws."
+  },
+  {
+    text: "Define reversibility in a thermodynamic context. Give two reasons why real processes are always irreversible.",
+    type: "Definition",
+    hint: "Examples of irreversibility: friction, heat transfer across finite temperature difference, free expansion."
+  },
+  {
+    text: "Water flows through a pipe that narrows from a diameter of 0.10 m to 0.05 m. If the velocity in the wider section is 2 m/s, find the velocity in the narrower section.",
+    type: "Calculation",
+    hint: "Apply the equation of continuity: A₁v₁ = A₂v₂. Area = π(d/2)²."
+  },
+  {
+    text: "Using Bernoulli's equation, explain why the pressure in a fast-flowing fluid is lower than in a slow-flowing fluid. Give one real-world application of this principle.",
+    type: "Short answer",
+    hint: "As v increases, the ½ρv² term increases, so P must decrease to keep the sum constant. Applications: aerofoil lift, Venturi meter, atomiser."
   }
 ];
-
+ 
 var answers = new Array(10).fill("");
 var current = 0;
 var totalSeconds = 30 * 60;
