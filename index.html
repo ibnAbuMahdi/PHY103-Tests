@@ -1,1 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Group 4 Physics Test — FUBK</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff; --bg2: #f5f5f4; --bg3: #eeede9;
+    --text: #1a1a18; --text2: #6b6b67; --text3: #a0a09a;
+    --border: rgba(0,0,0,0.12); --border2: rgba(0,0,0,0.22);
+    --blue-bg: #e6f1fb; --blue-text: #0c447c; --blue-border: rgba(24,95,165,0.3);
+    --green-bg: #eaf3de; --green-text: #3b6d11; --green-border: rgba(63,117,17,0.3);
+    --warn-bg: #faeeda; --warn-text: #854f0b; --warn-border: rgba(186,117,23,0.3);
+    --danger-bg: #fcebeb; --danger-text: #a32d2d; --danger-border: rgba(194,65,65,0.3);
+    --accent-bg: #EEEDFE; --accent-text: #3C3489; --accent-border: rgba(83,74,183,0.3);
+    --radius: 8px; --radius-lg: 12px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a; --bg2: #252523; --bg3: #2e2e2b;
+      --text: #e8e8e2; --text2: #9a9a94; --text3: #6b6b65;
+      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+      --blue-bg: #0c2a45; --blue-text: #85b7eb; --blue-border: rgba(55,138,221,0.3);
+      --green-bg: #17340a; --green-text: #97c459; --green-border: rgba(99,153,34,0.3);
+      --warn-bg: #3a2405; --warn-text: #fac775; --warn-border: rgba(239,159,39,0.3);
+      --danger-bg: #2e0f0f; --danger-text: #f09595; --danger-border: rgba(226,75,74,0.3);
+      --accent-bg: #26215C; --accent-text: #AFA9EC; --accent-border: rgba(127,119,221,0.3);
+    }
+  }
+  body { font-family: var(--font); background: var(--bg3); color: var(--text); min-height: 100vh; }
+  .page { max-width: 720px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  .site-header { text-align: center; margin-bottom: 2rem; }
+  .site-header .institution { font-size: 12px; font-weight: 500; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .site-header h1 { font-size: 20px; font-weight: 600; color: var(--text); }
+  .site-header .subtitle { font-size: 14px; color: var(--text2); margin-top: 4px; }
+  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+  .hidden { display: none !important; }
+  label { display: block; font-size: 13px; font-weight: 500; color: var(--text2); margin-bottom: 5px; }
+  input[type="text"], select {
+    width: 100%; padding: 10px 12px; font-size: 15px; font-family: var(--font);
+    background: var(--bg); color: var(--text); border: 0.5px solid var(--border2);
+    border-radius: var(--radius); margin-bottom: 1rem;
+  }
+  input[type="text"]:focus, select:focus { outline: none; border-color: var(--accent-text); }
+  select option { background: var(--bg); color: var(--text); }
+  textarea {
+    width: 100%; min-height: 110px; padding: 10px 12px; font-size: 14px;
+    font-family: var(--font); color: var(--text); background: var(--bg);
+    border: 0.5px solid var(--border); border-radius: var(--radius); resize: vertical; line-height: 1.6;
+  }
+  textarea:focus { outline: none; border-color: var(--accent-text); }
+  .btn {
+    padding: 9px 18px; font-size: 14px; font-family: var(--font);
+    border: 0.5px solid var(--border2); background: transparent; color: var(--text);
+    border-radius: var(--radius); cursor: pointer; font-weight: 500; transition: background 0.15s;
+  }
+  .btn:hover { background: var(--bg2); }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .btn-primary { background: var(--accent-bg); color: var(--accent-text); border-color: var(--accent-border); }
+  .btn-primary:hover { opacity: 0.85; background: var(--accent-bg); }
+  .btn-success { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+  .btn-danger { background: var(--danger-bg); color: var(--danger-text); border-color: var(--danger-border); }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-row.center { justify-content: center; }
+  .test-topbar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--border); }
+  .test-topbar .info .name { font-size: 15px; font-weight: 600; color: var(--text); }
+  .test-topbar .info .meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .timer { font-size: 15px; font-weight: 600; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 6px 14px; color: var(--text); }
+  .timer.warn { color: var(--danger-text); border-color: var(--danger-border); background: var(--danger-bg); }
+  .progress-bar { height: 3px; background: var(--bg3); border-radius: 2px; margin-bottom: 1rem; overflow: hidden; }
+  .progress-fill { height: 100%; background: #7F77DD; border-radius: 2px; transition: width 0.3s; }
+  .legend { display: flex; gap: 16px; margin-bottom: 0.75rem; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text2); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .q-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+  .q-pill { width: 32px; height: 32px; border-radius: 50%; border: 0.5px solid var(--border); background: var(--bg); font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text2); }
+  .q-pill:hover { background: var(--bg2); }
+  .q-pill.active { background: var(--accent-bg); color: var(--accent-text); border-color: var(--accent-border); }
+  .q-pill.answered { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+  .q-pill.active.answered { background: var(--accent-bg); color: var(--accent-text); border-color: var(--accent-border); }
+  .q-label { font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 6px; background: var(--bg2); color: var(--text2); border: 0.5px solid var(--border); font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .q-text { font-size: 15px; color: var(--text); line-height: 1.65; }
+  .q-hint { font-size: 12px; color: var(--text3); margin-top: 8px; }
+  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
+  .save-ind { font-size: 12px; color: var(--text3); }
+  .confirm-banner { background: var(--warn-bg); border: 0.5px solid var(--warn-border); border-radius: var(--radius); padding: 14px 16px; margin-top: 1rem; display: none; }
+  .confirm-banner p { font-size: 14px; color: var(--warn-text); margin-bottom: 10px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .summary-card { background: var(--bg2); border-radius: var(--radius); padding: 14px; text-align: center; }
+  .summary-card .val { font-size: 24px; font-weight: 600; color: var(--text); }
+  .summary-card .lbl { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-size: 11px; font-weight: 500; color: var(--text2); padding: 10px 14px; border-bottom: 0.5px solid var(--border); text-transform: uppercase; letter-spacing: 0.04em; }
+  td { padding: 11px 14px; border-bottom: 0.5px solid var(--border); color: var(--text); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg2); }
+  .rank-badge { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; background: var(--bg2); color: var(--text2); }
+  .rank-1 { background: var(--warn-bg); color: var(--warn-text); }
+  .rank-2 { background: var(--bg3); color: var(--text2); }
+  .rank-3 { background: var(--danger-bg); color: var(--danger-text); }
+  .empty-state { text-align: center; padding: 2.5rem; color: var(--text3); font-size: 14px; }
+  .result-hero { text-align: center; padding: 2rem 0 1.5rem; }
+  .result-hero .score { font-size: 48px; font-weight: 700; color: var(--text); }
+  .result-hero .sub { font-size: 14px; color: var(--text2); margin-top: 4px; }
+  .save-status { font-size: 13px; margin-top: 8px; }
+  .save-status.ok { color: var(--green-text); }
+  .save-status.err { color: var(--danger-text); }
+  .save-status.loading { color: var(--text3); }
+  .review-item { padding: 12px 0; border-bottom: 0.5px solid var(--border); }
+  .review-item:last-child { border-bottom: none; }
+  .review-q { font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 5px; }
+  .review-a { font-size: 14px; color: var(--text); line-height: 1.55; white-space: pre-wrap; }
+  .review-a.empty { color: var(--text3); font-style: italic; }
+  .dept-tag { font-size: 11px; padding: 2px 7px; border-radius: 4px; background: var(--accent-bg); color: var(--accent-text); }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+  .section-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 0.5px solid var(--border); }
+  .setup-banner { background: var(--warn-bg); border: 0.5px solid var(--warn-border); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 1rem; font-size: 13px; color: var(--warn-text); line-height: 1.6; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent-text); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 480px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .summary-grid { gap: 6px; }
+    .summary-card .val { font-size: 18px; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
 
+  <div class="site-header">
+    <div class="institution">Federal University Birnin Kebbi</div>
+    <h1>Group 4 — Advanced Molecular &amp; Statistical Concepts</h1>
+    <div class="subtitle">Kinetic Theory · Molecular Collisions · Mean Free Path &nbsp;|&nbsp; 10 Questions · 30 minutes</div>
+  </div>
+
+  <!-- ═══ ENTRY SCREEN ═══ -->
+  <div id="screen-entry">
+    <div class="card">
+      <div class="section-title">Participant details</div>
+      <label for="f-name">Full name</label>
+      <input type="text" id="f-name" placeholder="e.g. Amina Suleiman" maxlength="80" />
+      <div class="field-grid">
+        <div>
+          <label for="f-admno">Admission number</label>
+          <input type="text" id="f-admno" placeholder="e.g. 25102090001" maxlength="40" />
+        </div>
+        <div>
+          <label for="f-dept">Department</label>
+          <select id="f-dept">
+            <option value="">— Select department —</option>
+            <option>Physics with Electronics</option>
+            <option>Education Physics</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div id="entry-error" style="font-size:13px;color:var(--danger-text);margin-bottom:12px;display:none;"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="startTest()">Start test</button>
+        <button class="btn" onclick="showResults()">View leaderboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TEST SCREEN ═══ -->
+  <div id="screen-test" class="hidden">
+    <div class="test-topbar">
+      <div class="info">
+        <div class="name" id="tp-name"></div>
+        <div class="meta" id="tp-meta"></div>
+      </div>
+      <div class="timer" id="timer">30:00</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+    <div class="legend">
+      <div class="legend-item"><div class="dot" style="background:var(--accent-bg);border:1px solid var(--accent-border);"></div>Current</div>
+      <div class="legend-item"><div class="dot" style="background:var(--green-bg);border:1px solid var(--green-border);"></div>Answered</div>
+      <div class="legend-item"><div class="dot" style="background:var(--bg2);border:1px solid var(--border);"></div>Not answered</div>
+    </div>
+    <div class="q-nav" id="qnav"></div>
+    <div class="card">
+      <div class="q-label">Question <span id="q-num">1</span> of 10 <span class="badge" id="q-type"></span></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="q-hint" id="q-hint"></div>
+    </div>
+    <textarea id="answer-input" placeholder="Write your answer here..."></textarea>
+    <div class="nav-row" style="margin-top:0.75rem;">
+      <button class="btn" id="btn-prev" onclick="navigate(-1)">← Previous</button>
+      <span class="save-ind" id="save-ind"></span>
+      <button class="btn" id="btn-next" onclick="navigate(1)">Next →</button>
+    </div>
+    <div style="text-align:center;margin-top:1.25rem;">
+      <button class="btn btn-primary" onclick="trySubmit()">Submit test</button>
+    </div>
+    <div class="confirm-banner" id="confirm-banner">
+      <p id="confirm-msg"></p>
+      <div class="btn-row">
+        <button class="btn btn-danger" id="confirm-yes-btn" onclick="doSubmit()">Yes, submit</button>
+        <button class="btn" onclick="document.getElementById('confirm-banner').style.display='none'">Go back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SUBMITTED SCREEN ═══ -->
+  <div id="screen-submitted" class="hidden">
+    <div class="result-hero">
+      <div class="score" id="sub-score"></div>
+      <div class="sub">questions answered out of 10</div>
+      <div class="save-status loading" id="save-status"><span class="spinner"></span>Saving to Google Sheets...</div>
+    </div>
+    <div class="btn-row center" style="margin-bottom:1.5rem;">
+      <button class="btn btn-success" onclick="showResults()">View leaderboard</button>
+    </div>
+    <div class="card" id="answer-review"></div>
+  </div>
+
+  <!-- ═══ RESULTS SCREEN ═══ -->
+  <div id="screen-results" class="hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <div style="font-size:16px;font-weight:600;color:var(--text);">Leaderboard</div>
+      <div class="btn-row">
+        <button class="btn" onclick="loadResults()">↺ Refresh</button>
+        <button class="btn" onclick="showScreen('screen-entry')">← Back</button>
+      </div>
+    </div>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="val" id="stat-count">—</div><div class="lbl">Participants</div></div>
+      <div class="summary-card"><div class="val" id="stat-avg">—</div><div class="lbl">Avg answered</div></div>
+      <div class="summary-card"><div class="val" id="stat-full">—</div><div class="lbl">Full attempts</div></div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div id="leaderboard-body"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+//  CONFIGURATION — paste your Apps Script URL here
+// ════════════════════════════════════════════════
+var APPS_SCRIPT_URL = "YOUR_APPS_SCRIPT_URL_HERE";
+// ════════════════════════════════════════════════
+
+var STORAGE_KEY = "buk_group4_test_results";
+
+var questions = [
+  {
+    text: "State the five main assumptions of the Kinetic Theory of Gases.",
+    type: "Definition",
+    hint: "Cover: large number of molecules, random motion, elastic collisions, negligible volume, no intermolecular forces between collisions."
+  },
+  {
+    text: "What is the root mean square (rms) speed of gas molecules? Write its expression and state the meaning of each symbol.",
+    type: "Definition",
+    hint: "v_rms = √(3RT/M) or √(3kT/m). Define R, T, M, k, and m."
+  },
+  {
+    text: "Calculate the rms speed of nitrogen molecules (M = 0.028 kg/mol) at 300 K. (R = 8.314 J/mol·K)",
+    type: "Calculation",
+    hint: "Use v_rms = √(3RT/M). Substitute values carefully and give the answer in m/s."
+  },
+  {
+    text: "Show that the average kinetic energy of a gas molecule is (3/2)kT.",
+    type: "Derivation",
+    hint: "Start from KE = ½mv² and relate to P = (1/3)ρ<c²>. Use PV = NkT to arrive at KE = (3/2)kT."
+  },
+  {
+    text: "Explain the Maxwell-Boltzmann speed distribution. Name and distinguish the three characteristic speeds.",
+    type: "Short answer",
+    hint: "Name: most probable speed (v_p), mean speed (v̄), and rms speed (v_rms). State their relative magnitudes: v_p < v̄ < v_rms."
+  },
+  {
+    text: "Define mean free path (λ) and write its expression. How does it change with (a) increasing pressure and (b) increasing temperature at constant volume?",
+    type: "Definition",
+    hint: "λ = 1/(√2 · π · d² · n). At constant T, increasing P decreases n so λ decreases. At constant V, T does not affect n so λ is unchanged."
+  },
+  {
+    text: "Calculate the mean free path of air molecules at 1 atm and 300 K. (d = 3.7 × 10⁻¹⁰ m, n = 2.5 × 10²⁵ m⁻³)",
+    type: "Calculation",
+    hint: "Use λ = 1/(√2 · π · d² · n). Substitute values and express answer in metres."
+  },
+  {
+    text: "State the equipartition of energy theorem and apply it to find the internal energy of one mole of a monatomic ideal gas.",
+    type: "Short answer",
+    hint: "Each degree of freedom contributes ½kT per molecule. A monatomic gas has 3 translational degrees of freedom, so U = (3/2)RT per mole."
+  },
+  {
+    text: "What is the difference between Cv and Cp for an ideal gas? Derive the relation Cp − Cv = R.",
+    type: "Derivation",
+    hint: "Start from the First Law for an isobaric process: Q = ΔU + PΔV. Use PV = nRT and differentiate."
+  },
+  {
+    text: "At what temperature will oxygen molecules (M = 0.032 kg/mol) have an rms speed of 600 m/s? (R = 8.314 J/mol·K)",
+    type: "Calculation",
+    hint: "Rearrange v_rms = √(3RT/M) to get T = M·v²/(3R). Substitute and solve."
+  }
+];
+
+var answers = new Array(10).fill("");
+var current = 0;
+var totalSeconds = 30 * 60;
+var timerInterval = null;
+var participant = {};
+var sheetsEnabled = false;
+
+function init() {
+  sheetsEnabled = APPS_SCRIPT_URL && APPS_SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE";
+  if (!sheetsEnabled) document.getElementById("config-banner").classList.remove("hidden");
+}
+
+function showScreen(id) {
+  ["screen-entry","screen-test","screen-submitted","screen-results"].forEach(function(s) {
+    document.getElementById(s).classList.toggle("hidden", s !== id);
+  });
+}
+
+function esc(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function startTest() {
+  var name = document.getElementById("f-name").value.trim();
+  var admno = document.getElementById("f-admno").value.trim();
+  var dept = document.getElementById("f-dept").value;
+  var err = document.getElementById("entry-error");
+  if (!name || !admno || !dept) {
+    err.textContent = "Please fill in all fields before starting.";
+    err.style.display = "block";
+    return;
+  }
+  err.style.display = "none";
+  participant = { name: name, admno: admno, dept: dept };
+  document.getElementById("tp-name").textContent = name;
+  document.getElementById("tp-meta").textContent = admno + " · " + dept;
+  answers = new Array(10).fill("");
+  current = 0;
+  totalSeconds = 30 * 60;
+  if (timerInterval) clearInterval(timerInterval);
+  showScreen("screen-test");
+  renderQuestion();
+  startTimer();
+}
+
+function renderNav() {
+  var nav = document.getElementById("qnav");
+  nav.innerHTML = "";
+  questions.forEach(function(_, i) {
+    var pill = document.createElement("div");
+    pill.className = "q-pill" + (i === current ? " active" : "") + (answers[i].trim() ? " answered" : "");
+    pill.textContent = i + 1;
+    pill.onclick = (function(idx) { return function() { goTo(idx); }; })(i);
+    nav.appendChild(pill);
+  });
+}
+
+function renderQuestion() {
+  var q = questions[current];
+  document.getElementById("q-num").textContent = current + 1;
+  document.getElementById("q-text").textContent = q.text;
+  document.getElementById("q-type").textContent = q.type;
+  document.getElementById("q-hint").textContent = q.hint ? "Hint: " + q.hint : "";
+  document.getElementById("answer-input").value = answers[current];
+  document.getElementById("btn-prev").style.opacity = current === 0 ? "0.3" : "1";
+  document.getElementById("btn-prev").disabled = current === 0;
+  document.getElementById("btn-next").style.opacity = current === 9 ? "0.3" : "1";
+  document.getElementById("btn-next").disabled = current === 9;
+  document.getElementById("save-ind").textContent = "";
+  document.getElementById("confirm-banner").style.display = "none";
+  var answered = answers.filter(function(a) { return a.trim(); }).length;
+  document.getElementById("progress").style.width = (answered / 10 * 100).toFixed(0) + "%";
+  renderNav();
+}
+
+function saveAnswer() { answers[current] = document.getElementById("answer-input").value; }
+function goTo(i) { saveAnswer(); current = i; renderQuestion(); }
+function navigate(dir) { saveAnswer(); current = Math.max(0, Math.min(9, current + dir)); renderQuestion(); }
+
+document.getElementById("answer-input").addEventListener("input", function() {
+  answers[current] = this.value;
+  document.getElementById("save-ind").textContent = "Saved";
+  renderNav();
+  var a = answers.filter(function(x) { return x.trim(); }).length;
+  document.getElementById("progress").style.width = (a / 10 * 100).toFixed(0) + "%";
+});
+
+function trySubmit() {
+  saveAnswer();
+  var answered = answers.filter(function(a) { return a.trim(); }).length;
+  var msg = answered < 10
+    ? (10 - answered) + " question(s) still unanswered. Submit anyway?"
+    : "All 10 questions answered. Ready to submit?";
+  document.getElementById("confirm-msg").textContent = msg;
+  var b = document.getElementById("confirm-banner");
+  b.style.display = "block";
+  b.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function doSubmit() {
+  clearInterval(timerInterval);
+  saveAnswer();
+  var answered = answers.filter(function(a) { return a.trim(); }).length;
+  document.getElementById("confirm-yes-btn").disabled = true;
+  showScreen("screen-submitted");
+  document.getElementById("sub-score").textContent = answered + "/10";
+
+  var reviewEl = document.getElementById("answer-review");
+  reviewEl.innerHTML = "";
+  questions.forEach(function(q, i) {
+    var div = document.createElement("div");
+    div.className = "review-item";
+    var hasAns = answers[i].trim();
+    div.innerHTML = "<div class='review-q'>Q" + (i+1) + ". " + esc(q.text) + "</div>"
+      + "<div class='review-a" + (hasAns ? "" : " empty") + "'>"
+      + (hasAns ? esc(answers[i]) : "No answer provided") + "</div>";
+    reviewEl.appendChild(div);
+  });
+
+  var payload = {
+    name: participant.name,
+    admno: participant.admno,
+    dept: participant.dept,
+    group: "Group 4",
+    answered: answered,
+    answers: answers.slice(),
+    submittedAt: new Date().toISOString()
+  };
+
+  try {
+    var existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    existing.push(payload);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+  } catch(e) {}
+
+  var statusEl = document.getElementById("save-status");
+
+  if (sheetsEnabled) {
+    fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.success) {
+          statusEl.className = "save-status ok";
+          statusEl.textContent = "✓ Saved to Google Sheets.";
+        } else { throw new Error(d.error || "Unknown error"); }
+      })
+      .catch(function() {
+        statusEl.className = "save-status err";
+        statusEl.textContent = "⚠ Sheets save failed — saved locally instead.";
+      });
+  } else {
+    statusEl.className = "save-status err";
+    statusEl.textContent = "Saved locally (Google Sheets not configured).";
+  }
+}
+
+function startTimer() {
+  timerInterval = setInterval(function() {
+    totalSeconds--;
+    if (totalSeconds <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById("timer").textContent = "00:00";
+      doSubmit();
+      return;
+    }
+    var m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
+    var el = document.getElementById("timer");
+    el.textContent = String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+    if (totalSeconds <= 300) el.classList.add("warn"); else el.classList.remove("warn");
+  }, 1000);
+}
+
+function loadResults() {
+  var body = document.getElementById("leaderboard-body");
+  body.innerHTML = "<div class='empty-state'><span class='spinner'></span> Loading...</div>";
+
+  function renderTable(data) {
+    if (!data || !data.length) {
+      body.innerHTML = "<div class='empty-state'>No submissions yet.</div>";
+      document.getElementById("stat-count").textContent = "0";
+      document.getElementById("stat-avg").textContent = "—";
+      document.getElementById("stat-full").textContent = "0";
+      return;
+    }
+    var sorted = data.slice().sort(function(a,b) {
+      return b.answered - a.answered || new Date(a.submittedAt) - new Date(b.submittedAt);
+    });
+    var avg = (data.reduce(function(s,d) { return s + (parseInt(d.answered)||0); }, 0) / data.length).toFixed(1);
+    var full = data.filter(function(d) { return parseInt(d.answered) >= 10; }).length;
+    document.getElementById("stat-count").textContent = data.length;
+    document.getElementById("stat-avg").textContent = avg;
+    document.getElementById("stat-full").textContent = full;
+    var table = document.createElement("table");
+    table.innerHTML = "<thead><tr><th>Rank</th><th>Name</th><th>Adm. No.</th><th>Dept.</th><th>Answered</th><th>Time</th></tr></thead>";
+    var tbody = document.createElement("tbody");
+    sorted.forEach(function(d, i) {
+      var tr = document.createElement("tr");
+      var rc = i === 0 ? "rank-1" : i === 1 ? "rank-2" : i === 2 ? "rank-3" : "";
+      var time = new Date(d.submittedAt).toLocaleString("en-NG", { dateStyle:"short", timeStyle:"short" });
+      var ans = parseInt(d.answered) || 0;
+      tr.innerHTML = "<td><span class='rank-badge " + rc + "'>" + (i+1) + "</span></td>"
+        + "<td style='font-weight:500;'>" + esc(d.name) + "</td>"
+        + "<td style='font-size:12px;color:var(--text2);'>" + esc(d.admno) + "</td>"
+        + "<td><span class='dept-tag'>" + esc(d.dept) + "</span></td>"
+        + "<td><strong>" + ans + "</strong><span style='color:var(--text3)'>/10</span></td>"
+        + "<td style='font-size:12px;color:var(--text2);'>" + time + "</td>";
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    body.innerHTML = "";
+    body.appendChild(table);
+  }
+
+  if (sheetsEnabled) {
+    fetch(APPS_SCRIPT_URL + "?group=Group+4")
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.success) renderTable(d.data);
+        else throw new Error(d.error);
+      })
+      .catch(function() {
+        try {
+          var local = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+          renderTable(local);
+        } catch(e) { body.innerHTML = "<div class='empty-state'>Could not load results.</div>"; }
+      });
+  } else {
+    try {
+      var local = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      renderTable(local);
+    } catch(e) { body.innerHTML = "<div class='empty-state'>Could not load results.</div>"; }
+  }
+}
+
+function showResults() { showScreen("screen-results"); loadResults(); }
+
+init();
+</script>
+</body>
+</html>
